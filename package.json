@@ -3,11 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@progress/kendo-data-query": "^1.5.5",
+    "@progress/kendo-grid-react-wrapper": "^2019.4.1014",
+    "@progress/kendo-theme-default": "^4.40.1",
+    "@progress/kendo-ui": "^2021.2.616",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "rc-table": "^7.17.1",
+    "bootstrap": "5.1.0",
     "react": "^17.0.2",
+    "react-bootstrap": "^2.0.0-beta.4",
+    "react-datetime": "^3.0.4",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"

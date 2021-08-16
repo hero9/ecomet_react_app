@@ -24,7 +24,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 //-----------------------------------------------------------------
-var ecomet_util;
+import kendo from "@progress/kendo-ui";
+
+let ecomet_util;
 (function () {
     if (ecomet_util===undefined){ ecomet_util={}; }
     if (ecomet_util.kendo_util === undefined) {

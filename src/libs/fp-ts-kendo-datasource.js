@@ -31,7 +31,7 @@
 //      {archive:"/root/PROJECT/ARCHIVES/another_archive",aggregate:"mean",name:"next caption"}
 // ]
 
-import * as kendo from "../libs/kendo/kendo.all.min";
+import kendo from "@progress/kendo-ui";
 
 class TS_Datasource {
     constructor(connection,archives,options) {

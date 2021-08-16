@@ -1,4 +1,20 @@
 .table {
-  text-align: center;
-  width: 70%;
+    text-align: center;
+}
+
+.exone_options {
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+    margin: 20px 0;
+}
+
+.exone_widget {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+/*React bootstrap datetime picker*/
+.rdtOpen .rdtPicker {
+    background-color: #fff;
 }
