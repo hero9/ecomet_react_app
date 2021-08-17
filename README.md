@@ -7,6 +7,7 @@ This project was developed with:
  - Bootstrap
 
 # File structure
+```
 .
     ├── ...
     ├── src                                        # Source
@@ -24,6 +25,8 @@ This project was developed with:
     │   ├── App.css
     │   └── index.js
     └── package.json
+    
+```
 
 # Getting Started
 
