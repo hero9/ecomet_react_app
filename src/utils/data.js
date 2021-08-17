@@ -71,4 +71,13 @@ const valueDefined = (value) => {
     }
 }
 
-export { getDataFromTS, valueDefined }
+const getFields = () => {
+    return {
+        "_name": {type: "string", nullable: false},
+        "_pattern": {type: "string", nullable: false},
+        "_folder": {type: "string", nullable: false},
+        "value": {type: "string", nullable: true},
+    };
+}
+
+export { getDataFromTS, valueDefined, getFields }

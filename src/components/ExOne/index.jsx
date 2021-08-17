@@ -1,63 +1,83 @@
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Datetime from 'react-datetime';
+import React, {useEffect, useState} from "react";
+import ecomet_util from "../../libs/ecomet-kendo-datasource";
+import { getFields } from "../../utils/data";
 
-import { getDataFromTS } from "../../utils/data";
-import Grid from "../Grid";
+import Chart from "react-apexcharts";
 
-import "react-datetime/css/react-datetime.css";
-
-function Index({ connection }){
-    const [columns, setColumns] = useState([]);
+function ExOne({ connection }) {
+    const [labels, setLabels] = useState([]);
     const [data, setData] = useState([]);
-    const [from, setFrom] = useState(new Date());
-    const [to, setTo] = useState(new Date());
 
-    const fetchData = () => {
-        const options = {
-            "from": +from,
-            "to": +to
-        };
+    const initDS = () => {
+        const fields = getFields();
+        // Base query for objects
+        const filter={logic:"and",filters:[
+                {field:"_pattern",operator:"eq",value:"$oid('/root/.patterns/STATE')"},
+                {field:"_folder",operator:"eq",value:"$oid('/root/PROJECT/TAGS/fancytree')"}
+            ]};
+        // Create a datasource to display
+        return ecomet_util.kendo_datasource({
+            connection:connection,
+            fields:fields,
+            baseFilter:filter,
+            serverFiltering:true,
+            serverSorting:false,
+            serverPaging:false,
+            subscribe:false,
+            pageSize:30,
+            error:e=>{ console.error(e.xhr); }
+        });
 
-        try {
-            // Request data from
-            getDataFromTS(connection,options,onData)
-                .then((archives)=>{
-                    const _columns = archives.map((item) => {
-                        return {
-                            title: item.name,
-                            key: item.name.toLowerCase(),
-                        }
-                    });
-                    setColumns(_columns);
-                });
-        } catch (error) {
-            console.error(error)
-        }
     }
 
-    const onData = (data) => {
-        setData(data.items);
+    const chartOptions = {
+        options: {
+            chart: {
+                id: "basic-bar"
+            },
+            xaxis: {
+                categories: labels
+            }
+        },
+        series: [
+            {
+                name: "series-1",
+                data: data
+            }
+        ]
     }
 
-    const onChange = (moment,name) => {
-        name==="from"
-            ? setFrom(+moment.toDate())
-            : setTo((+moment.toDate()));
-    }
+    useEffect(() => {
+        const ds = initDS();
+        ds.fetch(function() {
+            const labels = ds.view().map(item => {
+                return item["_name"];
+            });
+            setLabels(labels);
+            const data = ds.view().map(item => {
+                return +item["value"];
+            });
+            setData(data);
+        });
+    },[]);
 
     return (
         <>
-            <div className="exone_options">
-                <Datetime required inputProps={{ placeholder:"FROM" }} onChange={(e) => { onChange(e,"from") }} />
-                <Datetime required inputProps={{ placeholder:"TO" }} onChange={(e) => { onChange(e,"to") }} />
-                <Button onClick={ fetchData } className="fetch_btn">Fetch</Button>
-            </div>
-            <div className="exone_widget">
-                <Grid options={{ columns, data }} />
+            <h4>Example 1: Bar chart</h4>
+            <div className="app">
+                <div className="row">
+                    <div className="mixed-chart">
+                        <Chart
+                            options={ chartOptions.options }
+                            series={ chartOptions.series }
+                            type="bar"
+                            width="500"
+                        />
+                    </div>
+                </div>
             </div>
         </>
-    );
+    )
 }
 
-export default Index;
+export default ExOne;

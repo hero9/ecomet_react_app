@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from "react";
+import ExTwo from "./components/ExTwo";
 import ExOne from "./components/ExOne";
 import Login from "./components/Login/index";
 import Ecomet from "./libs/ecomet";
@@ -19,11 +20,11 @@ function App() {
         <Fragment>
             {
                 loggedIn
-                    ? <div className="table">
-                        <h3>Example 1: Table</h3>
+                    ? <div className="examples">
                         <ExOne connection={ ecomet } />
+                        <ExTwo connection={ ecomet } />
                     </div>
-                    : <Login options={{ ecomet, onLogin }} />  // <h4>Logging in...</h4>
+                    : <Login options={{ ecomet, onLogin }} />
             }
         </Fragment>
     );
